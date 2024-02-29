@@ -73,6 +73,8 @@ export default function Home() {
     }
   };
   //</Staking>
+ 
+  //<Withdraw>
   const withdrawCoin = async () => {
     const { ethereum } = window as any;
     const provider = new BrowserProvider(ethereum);
@@ -88,9 +90,6 @@ export default function Home() {
       alert(`Minting failed: ${decodedError?.args}`);
     }
   };
-  //<Withdraw>
-  const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
-
   //</Withdraw>
 
 
