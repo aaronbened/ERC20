@@ -32,11 +32,6 @@ contract EOC is ERC20, Ownable {
         _transfer(msg.sender, address(this), adjustedAmount);
   }
 
-    function getStake(address account) public view returns (uint256) {
-        uint256 stakedInWei = _stakes[account];
-        uint256 stakedInEth = stakedInWei / 1e18;
-        return stakedInEth;
-  }
 
     function withdraw() public {
         require(block.timestamp > (_lastStakeTimestamp[msg.sender] + lockInPeriod), "You cannot withdraw funds, you are still in the lock in period");
@@ -49,24 +44,6 @@ contract EOC is ERC20, Ownable {
         _transfer(address(this), msg.sender, stakedAmount);
         _mint(msg.sender, reward);
   }
-
-    function getWithdraw(address account) public view returns (uint256) {
-        uint256 stakedAmount = _stakes[msg.sender] / 1e18;
-        uint256 reward = ((block.timestamp - _lastStakeTimestamp[account]) * _rewardRate);
-
-        uint256 total = reward + stakedAmount; 
-        return total;
-  }
-
-     function getElapsedStakeTime(address account) public view returns (uint256) {
-        uint256 time = (block.timestamp - _lastStakeTimestamp[account]);
-        return time;
-  } 
-
-    function getLastStakeTimestamp(address account) public view returns (uint256) {
-        return _lastStakeTimestamp[account];
-  }
-
 
     
 }
