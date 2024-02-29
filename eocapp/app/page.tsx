@@ -91,17 +91,49 @@ export default function Home() {
     }
   };
   //</Withdraw>
+  //<Import Token>
+  const importToken = async() => {
+    const {ethereum} = window as any;
+    const tokenAddress = "0x65B0158Db7b8477FeE406c8fe206766C740777B8";
+    const tokenSymbol = "EOC";
+    const tokenDecimal = 18;
+    const tokenImage = "https://supreme-eureka-p96wvj44wx9c7q4g.github.dev/";
 
+    try{
+      const wasAdded = await ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimal,
+            image: tokenImage,
+          },
+        },
+      });
+    }
+    catch(error){
+      console.log(error);
+    }
+  };
+  //</Import Token>
 
   return (
     <main>
         <p  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,fontSize: '24px'}}>Welcome to Mint/Staking of Entrance Only Coin</p>
          
-         <div style={{minHeight: '30vh' }}> <button onClick={() => {connectWallet();}}
-        className="p-3 bg-slate-800 text-white rounded"
-      >
+      <div style={{minHeight: '30vh' }}> 
+        <button onClick={() => {connectWallet();}}
+        className="p-3 bg-slate-800 text-white rounded">
         {walletKey != "" ? walletKey : " Connect wallet"}
-      </button>
+        </button>
+        
+        <button onClick={importToken}
+        className="p-3 bg-slate-800 text-white rounded">
+        Import Token
+        </button>
+
       </div>
 
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
