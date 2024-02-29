@@ -96,13 +96,15 @@ export default function Home() {
   return (
     <main>
         <p  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,fontSize: '24px'}}>Welcome to Mint/Staking of Entrance Only Coin</p>
-          <button onClick={() => {connectWallet();}}
+         
+         <div style={{minHeight: '30vh' }}> <button onClick={() => {connectWallet();}}
         className="p-3 bg-slate-800 text-white rounded"
       >
         {walletKey != "" ? walletKey : " Connect wallet"}
       </button>
+      </div>
 
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
       <br></br>
       <form>
         <label> Input Amount To Mint</label><br></br>
@@ -123,26 +125,26 @@ export default function Home() {
     </div>
     <br></br>
 
-<div>
-<form>
-    <label> Input Amount To Stake</label><br></br>
-    </form>
-  <input
-    type="number"
-    value = {stakingAmount}
-    onChange = {(e) => stakeAmountChange(e)}
-    style={{color:"Black"}}
-  />
- 
-  <button 
-    onClick={stakeCoin}
-    className="p-3 bg-slate-800 text-white rounded"
-  >
-    {"Stake It"}
-  </button> 
-</div>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '10vh' }}>
+    <form>
+        <label> Input Amount To Stake</label><br></br>
+        </form>
+      <input
+        type="number"
+        value = {stakingAmount}
+        onChange = {(e) => stakeAmountChange(e)}
+        style={{color:"Black"}}
+      />
+    
+      <button 
+        onClick={stakeCoin}
+        className="p-3 bg-slate-800 text-white rounded"
+      >
+        {"Stake It"}
+      </button> 
+    </div>
 
-<div>
+  <div>
     <br></br>
     <label>Wait for Atleast 1 min before Withdrawing </label>
     <br></br>
