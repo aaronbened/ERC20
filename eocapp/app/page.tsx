@@ -95,6 +95,7 @@ export default function Home() {
 
   return (
     <main>
+        <p  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,fontSize: '24px'}}>Welcome to Mint/Staking of Entrance Only Coin</p>
           <button onClick={() => {connectWallet();}}
         className="p-3 bg-slate-800 text-white rounded"
       >
