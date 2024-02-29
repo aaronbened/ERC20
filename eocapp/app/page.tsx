@@ -97,7 +97,7 @@ export default function Home() {
     const tokenAddress = "0x65B0158Db7b8477FeE406c8fe206766C740777B8";
     const tokenSymbol = "EOC";
     const tokenDecimal = 18;
-    const tokenImage = "https://supreme-eureka-p96wvj44wx9c7q4g.github.dev/";
+    const tokenImage = "https://github.com/aaronbened/ERC20/blob/main/door%20(1).png";
 
     try{
       const wasAdded = await ethereum.request({
