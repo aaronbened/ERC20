@@ -6,39 +6,44 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract EOC is ERC20, Ownable {
 
+    
     mapping(address => uint256) private _stakes;
-    mapping(address => uint256) private _lastStakeTimestamp;
-    uint256 private _rewardRate = 1;
-    uint256 private lockInPeriod = 60; //1 min
-
+    mapping(address => uint256) private stakeTimeStamp;
+    uint256 private _rewardRate = 5 ;
+    uint256 private Locking = 15;
+    
     constructor(address initialOwner) 
         ERC20("EntranceOnlyCoin", "EOC") 
         Ownable(initialOwner)
     {}
-
-    function mint(address to, uint256 amount) public {
-        uint256 adjustedAmount = amount * 1e18;
-        _mint(to, adjustedAmount);
+    
+        
+    
+    function minting(address to, uint256 amount) public {
+        uint256 weiConvert = amount * (10**(18));
+        _mint(to, weiConvert);
     }
 
-    function stake(uint256 amount) public {
-        uint256 adjustedAmount = amount * 1e18;
+    function staking(uint256 amount) public {
 
-        require(adjustedAmount > 0, "Cannot stake 0 tokens");
-        require(balanceOf(msg.sender) >= adjustedAmount, "Insufficient balance");
+        uint256 weiConvert = amount * (10**(18));
 
-        _stakes[msg.sender] += adjustedAmount;
-        _lastStakeTimestamp[msg.sender] = block.timestamp;
-        _transfer(msg.sender, address(this), adjustedAmount);
+        require(weiConvert > 0, "Cannot stake 0 tokens");
+        require(balanceOf(msg.sender) >= weiConvert, "Insufficient balance");
+
+        _stakes[msg.sender] += weiConvert;
+
+        stakeTimeStamp[msg.sender] = block.timestamp;
+        _transfer(msg.sender, address(this), weiConvert);
   }
 
 
     function withdraw() public {
-        require(block.timestamp > (_lastStakeTimestamp[msg.sender] + lockInPeriod), "You cannot withdraw funds, you are still in the lock in period");
-        require(_stakes[msg.sender] > 0, "No staked tokens");
+        require(block.timestamp > (stakeTimeStamp[msg.sender] + Locking), "YOU ARE IN LOCK PERIOD");
+        require(_stakes[msg.sender] > 0, "Stake Tokens First");
 
         uint256 stakedAmount = _stakes[msg.sender];
-        uint256 reward = ((block.timestamp - _lastStakeTimestamp[msg.sender]) * _rewardRate) * 1e18;
+        uint256 reward = ((block.timestamp - stakeTimeStamp[msg.sender]) * _rewardRate) * (10**(18));
 
         _stakes[msg.sender] = 0;
         _transfer(address(this), msg.sender, stakedAmount);
