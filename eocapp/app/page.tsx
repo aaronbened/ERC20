@@ -26,7 +26,7 @@ export default function Home() {
     const signer = await provider.getSigner();
     const contract = getContract(signer);
     try {
-      const tx = await contract.mint(signer, mintingAmount);
+      const tx = await contract.minting(signer, mintingAmount);
       await tx.wait();
       setSubmitted(true);
       setTransactionHash(tx.hash);
@@ -53,12 +53,14 @@ export default function Home() {
     const provider = new BrowserProvider(ethereum);
     const signer = await provider.getSigner();
     const contract = getContract(signer);
+
     try {
-      const tx = await contract.stake(stakingAmount);
+      const tx = await contract.staking(stakingAmount);
       await tx.wait();
       setSubmitted(true);
       setTransactionHash(tx.hash);
-    } catch (e: any) {
+    } 
+    catch (e: any) {
       const decodedError = contract.interface.parseError(e.data);
       alert(`Minting failed: ${decodedError?.args}`);
     }
@@ -91,25 +93,20 @@ export default function Home() {
     }
   };
   //</Withdraw>
+
   //<Import Token>
   const importToken = async() => {
     const {ethereum} = window as any;
-    const tokenAddress = "0x65B0158Db7b8477FeE406c8fe206766C740777B8";
+    const tokenAddress = "0x6dE98B211038d84FF10A68879048C33027bf3694";
     const tokenSymbol = "EOC";
     const tokenDecimal = 18;
-    const tokenImage = "https://github.com/aaronbened/ERC20/blob/main/door%20(1).png";
-
+    
     try{
       const wasAdded = await ethereum.request({
         method: "wallet_watchAsset",
         params: {
           type: "ERC20",
-          options: {
-            address: tokenAddress,
-            symbol: tokenSymbol,
-            decimals: tokenDecimal,
-            image: tokenImage,
-          },
+          options: {address: tokenAddress, symbol: tokenSymbol, decimals: tokenDecimal, },
         },
       });
     }
@@ -118,6 +115,9 @@ export default function Home() {
     }
   };
   //</Import Token>
+  //<disable button>
+
+  //</disable button>
 
   return (
     <main>
@@ -178,7 +178,8 @@ export default function Home() {
 
   <div>
     <br></br>
-    <label>Wait for Atleast 1 min before Withdrawing </label>
+    <br></br>
+    <label>have locking period of 15 seconds after staking </label>
     <br></br>
     <button 
         onClick={withdrawCoin}
@@ -186,6 +187,7 @@ export default function Home() {
       >
         {"Withdraw"}
       </button> 
+      
       </div>
 
     </main>
